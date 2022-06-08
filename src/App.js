@@ -1,10 +1,8 @@
 import logo from "./logo.svg";
 import "./App.css";
+import Button from "@mui/material/Button";
+import ButtonGroup from "@mui/material/ButtonGroup";
 
-// 사용자 정의 태그 만들기
-// jsx라는 문법이다. js를 확장한 문법. 사용자 정의 태그를 만들 때 사용
-// js를 일부 수정해서 컴포넌트를 만들기 편하게 만든 문법
-// create-react-app을 사용하면 jsx문법을 사용한 것.
 function Header() {
   return (
     <header>
@@ -15,36 +13,50 @@ function Header() {
   );
 }
 
-function Nav() {
+function Nav(props) {
+  const list = props.data.map((e) => {
+    return (
+      <li key={e.id}>
+        <a href={"/read/" + e.id}>{e.title}</a>
+      </li>
+    );
+  });
   return (
     <nav>
-      <ol>
-        <li>
-          <a href="/read/1">html</a>
-        </li>
-        <li>
-          <a href="/read/2">css</a>
-        </li>
-      </ol>
+      <ol>{list}</ol>
     </nav>
   );
 }
 
-function Aticle() {
+function Aticle(props) {
   return (
     <article>
-      <h2>Welcome</h2>
-      Hello, WEB!
+      <h2>{props.title}</h2>
+      {props.body}
     </article>
   );
 }
 
 function App() {
+  const topics = [
+    { id: 1, title: "html", body: "html is..." },
+    { id: 2, title: "css", body: "css is..." },
+    { id: 3, title: "js", body: "js is..." },
+  ];
   return (
     <div>
       <Header></Header>
-      <Nav></Nav>
-      <Aticle></Aticle>
+      <Nav data={topics}></Nav>
+      <Aticle title="Welcome" body="Hello, WEB"></Aticle>
+      <Aticle title="HTML" body="HTML is..."></Aticle>
+      <ButtonGroup
+        variant="contained"
+        aria-label="outlined primary button group"
+      >
+        <Button variant="outlined">Create</Button>
+        <Button variant="outlined">Update</Button>
+      </ButtonGroup>
+      <Button variant="outlined">Delete</Button>
     </div>
   );
 }
